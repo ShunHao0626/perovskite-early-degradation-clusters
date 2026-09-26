@@ -1,41 +1,32 @@
-# Early degradation patterns in perovskite solar cells
+# Perovskite early degradation: four curve patterns
 
-[中文说明](README_CN.md) · [Detailed workflow (中文)](WORKFLOW_CN.md)
+[中文](README_CN.md) · [Detailed method (中文)](docs/WORKFLOW_CN.md)
 
-This repository is a reproducibility package for exploring the **0–200 h** behavior of literature-mined perovskite solar-cell stability curves. It contains a fixed set of **1,842 curves**, their source CSV files and paper figures, the inputs used for the fit, analysis code, and the generated four-cluster results.
+A reproducible analysis of **1,842 literature-mined perovskite solar-cell stability curves** over the **0–200 h** early period. The included results group curve shapes into four exploratory patterns: **Slope, Bridge, Valley, and Hill**.
 
-**Method note:** This package fits a **density-weighted K-means** model to five shape features derived from each curve. It does **not** implement a self-organizing map (SOM). The four groups are exploratory patterns, not independently validated material or degradation classes. Earlier input curation and method selection were informed by provisional shape candidates; only the fit on the fixed inputs is label-free.
+> **Method:** The code uses five shape features and density-weighted K-means. It does not implement a self-organizing map (SOM). The fixed input set was curated earlier with provisional shape candidates, so the four groups are exploratory rather than independently validated classes.
 
-## What is included
+## Repository layout
 
-| Path | Purpose |
+| Folder | Contents |
 | --- | --- |
-| `data/input_index.csv` | Fixed IDs, order, and provenance for the 1,842 curves |
-| `data/points/` | Normalized observations within 0–200 h for input quality checks |
-| `data/shape_inputs.npz` | Aligned 64-point observation-rank shapes read by the model |
-| `data/raw_csv/`, `data/curve_index.csv` | Extracted source CSVs, paper images, replots, provenance, and SHA-256 hashes |
-| `config.json`, `run.py` | Fixed parameters and four-cluster analysis |
-| `verify.py` | Input and output integrity checks |
-| `results/` | Assignments, model arrays, plots, summaries, source copies grouped by cluster, and verification reports |
-| `results/dashboard.html` | Offline browser for the 1,842 curves and source images |
+| [`code/`](code/) | Analysis, verification, plotting, dashboard builder, pinned dependencies, and configuration |
+| [`data/`](data/) | Fixed input index, 0–200 h observations, 64-point shapes, extracted CSVs, and source figures |
+| [`results/`](results/) | Included four-cluster output, figures, source copies, and offline [dashboard](results/dashboard.html) |
+| [`docs/`](docs/) | Detailed method and interpretation |
 
-The `results/cluster_1/` through `results/cluster_4/` directories contain copies of source DOI folders. A DOI folder can occur in more than one cluster; each cluster's `members.csv` identifies which CSVs belong to it.
+## Reproduce the results
 
-## Reproduce
-
-Use Python 3.9 in an isolated environment. From this directory:
+Use **Python 3.9**. From the repository root (macOS/Linux):
 
 ```bash
-python3 -m pip install -r requirements.txt
-python3 verify.py
-OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 python3 run.py
-python3 verify.py --check-results
+python3 -m venv .venv
+.venv/bin/python -m pip install -r code/requirements.txt
+.venv/bin/python code/verify.py
+OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 .venv/bin/python code/run.py
+.venv/bin/python code/verify.py --check-results
 ```
 
-The included result has **1,710 / 44 / 21 / 67** curves in clusters 1–4. The dashboard names these patterns **Slope / Bridge / Valley / Hill**. Open `results/dashboard.html` locally to inspect individual curves, figures, and CSVs. Runtime versions are recorded in `results/environment.json`.
+The run writes to `results/` and replaces the generated cluster folders. Expected cluster sizes are **1,710 / 44 / 21 / 67**. Open `results/dashboard.html` locally to browse all curves and source figures. Parameters are in [`code/config.json`](code/config.json); the full workflow is in [`docs/WORKFLOW_CN.md`](docs/WORKFLOW_CN.md).
 
-## Scope and interpretation
-
-This package starts from the **already selected** 1,842 curves. It does not redigitize figures from papers or repeat selection from the larger candidate collection. Raw CSVs retain their original time units; fitting uses the aligned 64-point observation-rank shapes, so elapsed hours establish the early window and observation order but are **not** a distance dimension in clustering. The groups describe relative curve shapes and should not be interpreted as verified labels or a classification accuracy result.
-
-For the feature construction, weighting, fit, output definitions, and methodological boundaries, see [WORKFLOW_CN.md](WORKFLOW_CN.md).
+**Scope:** This repository reproduces clustering from a fixed set of already extracted curves. It does not repeat paper-figure digitization or selection from the larger candidate collection. Clustering uses observation rank, not elapsed hours, as its shape axis.

@@ -17,8 +17,8 @@ from matplotlib.collections import LineCollection
 from scipy.ndimage import gaussian_filter1d
 
 
-HERE = Path(__file__).resolve().parent
-CONFIG = json.loads((HERE / "config.json").read_text(encoding="utf-8"))
+HERE = Path(__file__).resolve().parent.parent
+CONFIG = json.loads((HERE / "code" / "config.json").read_text(encoding="utf-8"))
 DEFAULT_RESULTS = (HERE / CONFIG["output_dir"]).resolve()
 
 

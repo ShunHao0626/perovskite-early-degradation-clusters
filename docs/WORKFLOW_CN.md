@@ -26,13 +26,13 @@ flowchart LR
 - `data/input_index.csv` 定义 1842 条曲线的 ID、顺序、来源，以及对应的归一化观测点文件。
 - `data/points/` 提供质量筛查用的早期归一化观测点；`data/shape_inputs.npz` 中的 `raw_rank` 是模型直接读取的 **1842 × 64** 序位形状矩阵，两者按曲线 ID 对齐。
 - `data/raw_csv/` 与 `data/curve_index.csv` 保留原始提取 CSV、来源和 SHA-256，供追溯；聚类不直接读取这些原始 CSV。
-- `python3 verify.py` 核验 ID 数量与顺序、原始 CSV 哈希、点文件是否存在，以及 64 点矩阵的形状和有限值。
+- `python3 code/verify.py` 核验 ID 数量与顺序、原始 CSV 哈希、点文件是否存在，以及 64 点矩阵的形状和有限值。
 
 本包从固定输入开始，**不重新从论文图片数字化曲线，也不重新从更大候选池筛选 1842 条曲线**。
 
 ## 2. 观测点质量筛查
 
-对每条曲线，`run.py` 从 `data/points/` 读取 `hour` 和 `normalized_pce`。若同一小时有多个点，先取其中位数，再按小时排序。小时仅用于确定原始观测顺序；**实际聚类不使用经过的小时数**。
+对每条曲线，`code/run.py` 从 `data/points/` 读取 `hour` 和 `normalized_pce`。若同一小时有多个点，先取其中位数，再按小时排序。小时仅用于确定原始观测顺序；**实际聚类不使用经过的小时数**。
 
 保留条件同时满足：
 
@@ -66,7 +66,7 @@ flowchart LR
 
 ## 5. 结果、图和核验
 
-`run.py` 将结果写入本目录下的 `results/`：
+`code/run.py` 将结果写入仓库根目录下的 `results/`：
 
 | 文件 | 内容 |
 | --- | --- |
@@ -80,25 +80,25 @@ flowchart LR
 | `cluster_1/` ～ `cluster_4/` | 完整复制的原始 DOI 文件夹；`members.csv` 标出属于本簇的曲线 CSV |
 | `dashboard.html` / `dashboard_data.json` | 离线交互页面及可核验的逐曲线展示数据 |
 
-放大图由 `render_si_zoom.py` 根据**已经完成的拟合**绘制。黑色中位趋势线使用展示用高斯平滑：Cluster 1 的 `sigma=3.0`，其他簇的 `sigma=1.2`；各面板单独缩放纵轴。**这些绘图参数不改变簇号**。
+放大图由 `code/render_si_zoom.py` 根据**已经完成的拟合**绘制。黑色中位趋势线使用展示用高斯平滑：Cluster 1 的 `sigma=3.0`，其他簇的 `sigma=1.2`；各面板单独缩放纵轴。**这些绘图参数不改变簇号**。
 
-`python3 verify.py --check-results` 再检查结果 ID 顺序、模型输入、簇大小、纳入数量和图文件。本次核验通过：Cluster 1、2、3、4 分别有 **1710、44、21、67** 条曲线。
+`python3 code/verify.py --check-results` 再检查结果 ID 顺序、模型输入、簇大小、纳入数量和图文件。本次核验通过：Cluster 1、2、3、4 分别有 **1710、44、21、67** 条曲线。
 
 同一个 DOI 文件夹可能包含不同簇的曲线。因此，四个簇目录中可能重复出现同一 DOI 文件夹；完整副本保留原始 CSV、论文图和 replot，而各目录的 `members.csv` 才是该簇曲线的准确清单。结果核验还检查清单、复制的 CSV 哈希和 DOI 文件夹内容是否齐全。
 
-`build_dashboard.py` 根据结果和 `data/raw_csv/curve_index.csv` 生成 `results/dashboard.html`。页面提供簇筛选、关键词搜索、逐曲线 DOI、论文图号、文件名中记录的曲线图例、原论文图、replot 图和原始 CSV。命名对应为 **Cluster 1 = Slope、Cluster 2 = Bridge、Cluster 3 = Valley、Cluster 4 = Hill**。页面数据内嵌，双击 HTML 即可离线打开；`dashboard_data.json` 供程序核验。
+`code/build_dashboard.py` 根据结果和 `data/raw_csv/curve_index.csv` 生成 `results/dashboard.html`。页面提供簇筛选、关键词搜索、逐曲线 DOI、论文图号、文件名中记录的曲线图例、原论文图、replot 图和原始 CSV。命名对应为 **Cluster 1 = Slope、Cluster 2 = Bridge、Cluster 3 = Valley、Cluster 4 = Hill**。页面数据内嵌，双击 HTML 即可离线打开；`dashboard_data.json` 供程序核验。
 
 ## 复现命令
 
-在本目录、安装 `requirements.txt` 中的依赖后执行：
+在仓库根目录、安装 `code/requirements.txt` 中的依赖后执行：
 
 ```bash
-python3 verify.py
-OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 python3 run.py
-python3 verify.py --check-results
+python3 code/verify.py
+OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 python3 code/run.py
+python3 code/verify.py --check-results
 ```
 
-实际运行环境及版本见 `results/environment.json`。代码入口为 `run.py`，参数集中在 `config.json`，核验逻辑在 `verify.py`。
+实际运行环境及版本见 `results/environment.json`。代码入口为 `code/run.py`，参数集中在 `code/config.json`，核验逻辑在 `code/verify.py`。
 
 ## 方法边界
 

@@ -20,8 +20,8 @@ from sklearn.neighbors import NearestNeighbors
 from sklearn.preprocessing import RobustScaler
 
 
-HERE = Path(__file__).resolve().parent
-CONFIG = json.loads((HERE / "config.json").read_text(encoding="utf-8"))
+HERE = Path(__file__).resolve().parent.parent
+CONFIG = json.loads((HERE / "code" / "config.json").read_text(encoding="utf-8"))
 OUT = (HERE / CONFIG["output_dir"]).resolve()
 INDEX = (HERE / CONFIG["input_index"]).resolve()
 SHAPES = (HERE / CONFIG["input_shapes"]).resolve()
@@ -224,8 +224,8 @@ def main() -> None:
                         amplitudes=amplitudes, original_positions=np.array(positions))
     plot(raw, rows, cluster_ids, reps)
     summary = dict(protocol=CONFIG["protocol"], input_index_sha256=sha(INDEX),
-                   input_shapes_sha256=sha(SHAPES), config_sha256=sha(HERE / "config.json"),
-                   code_sha256=sha(HERE / "run.py"), included=len(rows),
+                   input_shapes_sha256=sha(SHAPES), config_sha256=sha(HERE / "code" / "config.json"),
+                   code_sha256=sha(HERE / "code" / "run.py"), included=len(rows),
                    excluded_sparse=sum(r["reason"] == "fewer_than_8_distinct_observations"
                                        for r in excluded),
                    excluded_rough=sum(r["reason"] == "excessive_oscillation"

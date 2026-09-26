@@ -12,7 +12,7 @@ from urllib.parse import unquote
 import numpy as np
 
 
-HERE = Path(__file__).resolve().parent
+HERE = Path(__file__).resolve().parent.parent
 DATA = HERE / "data"
 
 
@@ -57,7 +57,7 @@ def main() -> None:
 
     report = {"inputs_valid": True, "curves": len(ids), "raw_csv_files": len(sources)}
     if args.check_results:
-        config = json.loads((HERE / "config.json").read_text(encoding="utf-8"))
+        config = json.loads((HERE / "code" / "config.json").read_text(encoding="utf-8"))
         output = (HERE / config["output_dir"]).resolve()
         assignments = rows(output / "cluster_assignments.csv")
         check([row["curve_id"] for row in assignments] == ids, "Result IDs/order differ")

@@ -8,8 +8,8 @@ from pathlib import Path
 from urllib.parse import quote
 
 
-HERE = Path(__file__).resolve().parent
-TEMPLATE = HERE / "dashboard_template.html"
+HERE = Path(__file__).resolve().parent.parent
+TEMPLATE = HERE / "code" / "dashboard_template.html"
 CLUSTER_NAMES = {1: "Slope", 2: "Bridge", 3: "Valley", 4: "Hill"}
 
 
