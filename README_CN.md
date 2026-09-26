@@ -6,7 +6,7 @@
 
 ## 核心结果：四簇曲线局部放大图
 
-![四簇曲线及其中位趋势的局部放大图](results/figures/Supplementary_Fig_S1_zoom.png)
+<a href="results/figures/Supplementary_Fig_S1_zoom.png"><img src="results/figures/Supplementary_Fig_S1_zoom.png" alt="四簇曲线及其中位趋势的局部放大图" width="560"></a>
 
 浅色线为单条曲线，黑线为仅供展示的平滑中位趋势。各面板的纵轴分别放大；横轴为**相对观测序位**，不是实际经过的小时数。可[打开矢量图](results/figures/Supplementary_Fig_S1_zoom.svg)，或[浏览单条曲线](results/dashboard.html)。
 

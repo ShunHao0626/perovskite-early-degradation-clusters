@@ -6,7 +6,7 @@ A reproducible analysis of **1,842 literature-mined perovskite solar-cell stabil
 
 ## Core result: zoomed-in view of the four clusters
 
-![Zoomed-in curves and median trends for the four clusters](results/figures/Supplementary_Fig_S1_zoom.png)
+<a href="results/figures/Supplementary_Fig_S1_zoom.png"><img src="results/figures/Supplementary_Fig_S1_zoom.png" alt="Zoomed-in curves and median trends for the four clusters" width="560"></a>
 
 The pale lines are individual curves; black lines show smoothed median trends for display. Each panel has its own zoomed vertical scale, and the horizontal axis is **relative observation rank**, not elapsed hours. [Open the vector figure](results/figures/Supplementary_Fig_S1_zoom.svg) or [browse individual curves](results/dashboard.html).
 
