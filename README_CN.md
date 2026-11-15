@@ -2,6 +2,8 @@
 
 [English](README.md) · [详细方法](docs/WORKFLOW_CN.md)
 
+> **已迁移：** 完整且持续维护的复现包现位于 [`ml-degradation-analysis/reproduction/early-degradation-clusters/`](https://github.com/ShunHao0626/ml-degradation-analysis/tree/main/reproduction/early-degradation-clusters)。本仓库作为历史快照保留，以兼容已有链接。当前说明与结果请以新位置为准。
+
 > **同一项目的一部分。** 本仓库是早期衰减曲线聚类研究的独立复现包。完整的研究工作区——数据集构建（2,250 个源文件 → 2,246 条规范曲线）、更广泛的 0–200 h SOM／形态分析、PFD–DTW 导数聚类，以及 Hartono PvkSOM 复现——位于 [ml-degradation-analysis](https://github.com/ShunHao0626/ml-degradation-analysis)。本仓库使用的固定 1,842 条输入是该规范曲线集的子集。
 
 本仓库整理了论文中提取的 **1842 条钙钛矿太阳能电池稳定性曲线**，探索 **0–200 小时**内的早期变化。现有结果分为四个探索性簇，展示时分别命名为 **Slope（Cluster 1）、Bridge（Cluster 2）、Valley（Cluster 3）、Hill（Cluster 4）**。

@@ -2,6 +2,8 @@
 
 [中文](README_CN.md) · [Detailed method (中文)](docs/WORKFLOW_CN.md)
 
+> **Moved:** The complete, actively maintained package is now at [`ml-degradation-analysis/reproduction/early-degradation-clusters/`](https://github.com/ShunHao0626/ml-degradation-analysis/tree/main/reproduction/early-degradation-clusters). This repository is retained as a historical snapshot for existing links. Use the new location for current instructions and results.
+
 > **Part of one project.** This repository is the standalone reproduction package of the early-degradation curve clustering study. The full research workspace — dataset construction (2,250 source files → 2,246 canonical curves), the broader 0–200 h SOM/morphology analysis, PFD–DTW derivative clustering, and the Hartono PvkSOM reproduction — is in [ml-degradation-analysis](https://github.com/ShunHao0626/ml-degradation-analysis). The fixed 1,842-curve input used here is a subset of that canonical collection.
 
 A reproducible analysis of **1,842 literature-mined perovskite solar-cell stability curves** over the **0–200 h** early period. The included results group curve shapes into four exploratory clusters, named for display as **Slope (Cluster 1), Bridge (Cluster 2), Valley (Cluster 3), and Hill (Cluster 4)**.
